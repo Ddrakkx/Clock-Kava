@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>ClockKava | Спешелті кава у Кременчуці</title>
+  <!-- Google Fonts: Lora (serif) + Inter (sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Lora:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Tailwind via CDN + кастомная конфигурация -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'clock-bg': '#1A1816',
+            'clock-card': '#262220',
+            'clock-accent': '#E29A5B',
+            'clock-accent-hover': '#c47e45',
+            'clock-cream': '#F5E6D3',
+            'clock-white': '#FDFBF7',
+          },
+          fontFamily: {
+            'serif-display': ['"Lora"', 'Georgia', 'serif'],
+            'sans-ui': ['"Inter"', 'system-ui', 'sans-serif'],
+          },
+          backdropBlur: {
+            'xs': '2px',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #1A1816;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .tab-btn.active {
+      background-color: #E29A5B;
+      color: #1A1816;
+      font-weight: 600;
+      box-shadow: 0 8px 18px -6px rgba(226, 154, 91, 0.35);
+    }
+    .menu-content:not(.hidden) {
+      animation: fadeSlide 0.4s ease-out;
+    }
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .image-card img {
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .image-card:hover img {
+      transform: scale(1.05);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1A1816; }
+    ::-webkit-scrollbar-thumb { background: #3A3532; border-radius: 8px; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="text-[#FDFBF7] font-sans-ui antialiased">
+
+  <!-- ===== HEADER (плавающий, размытие) ===== -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-[#1A1816]/70 backdrop-blur-md border-b border-white/5 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <!-- Логотип текстовый -->
+      <div class="flex items-center gap-2">
+        <span class="text-3xl font-serif-display font-bold tracking-wide text-[#E29A5B] italic">Clock</span>
+        <span class="text-2xl font-serif-display font-semibold text-[#FDFBF7] tracking-tight">Kava</span>
+      </div>
+      <!-- Кнопка "Де ми?" -->
+      <a href="#footer-location" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-full px-5 py-2.5 text-sm font-medium text-[#F5E6D3] backdrop-blur-sm">
+        <i class="fas fa-map-pin text-[#E29A5B] text-base"></i>
+        <span class="hidden sm:inline">Де ми?</span>
+        <span class="sm:hidden">Локація</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="relative min-h-[95vh] flex items-center justify-center overflow-hidden pt-16">
+    <!-- фоновое изображение (unsplash кофе/зерна) -->
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1974&auto=format&fit=crop" 
+           alt="Coffee aesthetic" 
+           class="w-full h-full object-cover opacity-30 md:opacity-40"
+           loading="eager">
+      <div class="absolute inset-0 bg-gradient-to-b from-[#1A1816]/80 via-[#1A1816]/60 to-[#1A1816]/90"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center py-20 md:py-28">
+      <!-- Акцентный бейдж с реальными данными -->
+      <div class="inline-flex items-center gap-2 bg-[#262220]/80 backdrop-blur-sm border border-[#E29A5B]/30 rounded-full px-5 py-2 mb-6 text-sm text-[#E29A5B] font-medium">
+        <i class="far fa-clock"></i>
+        <span>Кременчук · 204 підписники 💛</span>
+      </div>
+      
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif-display font-bold leading-tight text-[#FDFBF7] drop-shadow-2xl">
+        Твій час для <br class="sm:hidden">ідеальної кави <br><span class="text-[#E29A5B] italic">у Кременчуці</span>
+      </h1>
+      
+      <p class="text-base md:text-xl text-[#F5E6D3]/80 max-w-2xl mx-auto mt-6 leading-relaxed font-light">
+        Ароматна кава, чай, молочні коктейлі, гарячий шоколад і смаколики. 
+        Затишна лофт-атмосфера, де час сповільнюється.
+      </p>
+      
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="#menu-tabs" class="group bg-[#E29A5B] hover:bg-[#c47e45] text-[#1A1816] font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 shadow-2xl hover:shadow-[#E29A5B]/30 flex items-center gap-3 transform hover:-translate-y-1">
+          <i class="fas fa-mug-hot group-hover:animate-bounce"></i> Дивитись Меню
+        </a>
+        <a href="#footer-location" class="flex items-center gap-2 border border-white/20 hover:border-[#E29A5B]/60 text-[#F5E6D3] px-8 py-4 rounded-full text-lg transition-all backdrop-blur-sm">
+          <i class="far fa-compass"></i> Знайти нас
+        </a>
+      </div>
+      
+      <div class="mt-16 md:mt-20 text-xs text-white/40 flex items-center justify-center gap-2">
+        <i class="fas fa-chevron-down animate-bounce"></i> гортай далі
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== МЕНЮ З ТАБАМИ ===== -->
+  <section id="menu-tabs" class="max-w-5xl mx-auto px-4 py-20 md:py-28">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-serif-display font-bold text-[#FDFBF7]">Меню</h2>
+      <p class="text-[#F5E6D3]/60 mt-3 max-w-xl mx-auto">Оберіть категорію — усе готується з любов’ю та професійним підходом.</p>
+    </div>
+
+    <!-- кнопки табов -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <button class="tab-btn active px-6 py-3 rounded-full border border-[#E29A5B]/40 bg-transparent text-[#F5E6D3] font-medium transition-all duration-300" data-tab="classic">
+        <i class="fas fa-coffee mr-2"></i>Класика
+      </button>
+      <button class="tab-btn px-6 py-3 rounded-full border border-[#E29A5B]/40 bg-transparent text-[#F5E6D3] font-medium transition-all duration-300" data-tab="author">
+        <i class="fas fa-star mr-2"></i>Авторські
+      </button>
+      <button class="tab-btn px-6 py-3 rounded-full border border-[#E29A5B]/40 bg-transparent text-[#F5E6D3] font-medium transition-all duration-300" data-tab="desserts">
+        <i class="fas fa-croissant mr-2"></i>Десерти
+      </button>
+    </div>
+
+    <!-- контент табов -->
+    <div class="bg-[#262220]/70 backdrop-blur-sm rounded-3xl p-6 md:p-10 border border-white/5 shadow-2xl">
+      <!-- Класика -->
+      <div id="tab-classic" class="menu-content space-y-6">
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Еспресо</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Насичений, оксамитовий, класична італійська база</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">45 грн</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Капучино</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Шовковиста мікропінка, еспресо та молоко 1:3</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">62 грн</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Лате</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Ніжний молочний смак із подвійним еспресо</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">68 грн</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Американо</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Класичний об'єм, збалансована кислотність</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">55 грн</span>
+        </div>
+      </div>
+
+      <!-- Авторські -->
+      <div id="tab-author" class="menu-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Раф солона карамель</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Вершковий раф із домашньою карамеллю та морською сіллю</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">85 грн</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Флет Вайт на арабіці</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Подвійний рістретто, оксамитове молоко, ефіопська арабіка</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">78 грн</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Лавандовий лате</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Домашній лавандовий сироп, еспресо, ніжна пінка</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">95 грн</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Матча-тонік</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Церемоніальна матча, хрусткий тонік, цитрус</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">88 грн</span>
+        </div>
+      </div>
+
+      <!-- Десерти -->
+      <div id="tab-desserts" class="menu-content hidden space-y-6">
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Круасан мигдалевий</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Хрусткий, з начинкою франжипан та мигдалевими пелюстками</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">72 грн</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Чізкейк Нью-Йорк</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Щільний вершковий сир, основа з печива, карамельний соус</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">95 грн</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Макаронс (3 шт)</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Фісташка, малина, солона карамель — французька класика</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">68 грн</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-xl font-semibold text-[#FDFBF7]">Брауні з еспресо</h3>
+            <p class="text-sm text-[#F5E6D3]/60">Вологий шоколадний брауні з нотками свіжозмеленого еспресо</p>
+          </div>
+          <span class="text-[#E29A5B] font-bold text-lg">78 грн</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== АТМОСФЕРА ЧАСУ ===== -->
+  <section class="max-w-6xl mx-auto px-4 py-16 md:py-24">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-serif-display font-bold text-[#FDFBF7]">Атмосфера часу</h2>
+      <p class="text-[#F5E6D3]/60 mt-3">Зазирни в наш простір, де кожна деталь створює настрій.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div class="image-card group relative overflow-hidden rounded-3xl shadow-2xl border border-white/5 aspect-[4/5] md:aspect-[3/4]">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
+             alt="Бариста за роботою" 
+             class="w-full h-full object-cover absolute inset-0"
+             loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#1A1816]/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-5 left-5 right-5">
+          <span class="text-sm font-medium text-[#E29A5B] bg-[#1A1816]/70 px-4 py-1.5 rounded-full backdrop-blur-sm">Бариста & майстерність</span>
+          <p class="text-white/90 text-lg font-serif-display mt-2 italic">Руки, що творять смак</p>
+        </div>
+      </div>
+      <div class="image-card group relative overflow-hidden rounded-3xl shadow-2xl border border-white/5 aspect-[4/5] md:aspect-[3/4]">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop" 
+             alt="Процес приготування кави" 
+             class="w-full h-full object-cover absolute inset-0"
+             loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#1A1816]/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-5 left-5 right-5">
+          <span class="text-sm font-medium text-[#E29A5B] bg-[#1A1816]/70 px-4 py-1.5 rounded-full backdrop-blur-sm">Свіжа обсмажка</span>
+          <p class="text-white/90 text-lg font-serif-display mt-2 italic">Кожна крапля — ритуал</p>
+        </div>
+      </div>
+      <div class="image-card group relative overflow-hidden rounded-3xl shadow-2xl border border-white/5 aspect-[4/5] md:aspect-[3/4]">
+        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1947&auto=format&fit=crop" 
+             alt="Затишний столик у кав'ярні" 
+             class="w-full h-full object-cover absolute inset-0"
+             loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#1A1816]/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-5 left-5 right-5">
+          <span class="text-sm font-medium text-[#E29A5B] bg-[#1A1816]/70 px-4 py-1.5 rounded-full backdrop-blur-sm">Лофт & затишок</span>
+          <p class="text-white/90 text-lg font-serif-display mt-2 italic">Твій улюблений столик</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ФУТЕР (реальные данные: график 9:00-20:00, Instagram clockkava) ===== -->
+  <footer id="footer-location" class="bg-[#262220]/60 border-t border-white/5 mt-10 pt-16 pb-8 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="flex items-center justify-center gap-2 mb-8">
+        <span class="text-3xl font-serif-display font-bold text-[#E29A5B] italic">Clock</span>
+        <span class="text-2xl font-serif-display font-semibold text-[#FDFBF7]">Kava</span>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 text-[#F5E6D3]/80">
+        <div class="space-y-2">
+          <i class="fas fa-map-marker-alt text-[#E29A5B] text-xl mb-2"></i>
+          <p class="font-semibold text-white text-lg">Адреса</p>
+          <p>вул. Соборна, 16</p>
+          <p>Кременчук, Україна</p>
+        </div>
+        <div class="space-y-2">
+          <i class="far fa-clock text-[#E29A5B] text-xl mb-2"></i>
+          <p class="font-semibold text-white text-lg">Графік роботи</p>
+          <p>Щодня: 9:00 – 20:00</p>
+          <p class="text-sm text-[#E29A5B]/70 mt-1"></p>
+        </div>
+        <div class="space-y-2">
+          <i class="fas fa-mug-hot text-[#E29A5B] text-xl mb-2"></i>
+          <p class="font-semibold text-white text-lg">Завітай</p>
+          <p>Свіжа обсмажка щодня</p>
+          <p>Wi-Fi · тераса · dog-friendly</p>
+        </div>
+      </div>
+
+      <!-- Соцсети – реальная ссылка Instagram -->
+      <div class="flex justify-center gap-6 mb-10">
+        <a href="https://instagram.com/clockkava" target="_blank" rel="noopener noreferrer" 
+           class="w-14 h-14 flex items-center justify-center rounded-full bg-[#E29A5B] text-[#1A1816] text-2xl hover:bg-[#c47e45] transition-all shadow-lg hover:shadow-[#E29A5B]/40 transform hover:scale-110" 
+           aria-label="Instagram ClockKava">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="w-14 h-14 flex items-center justify-center rounded-full bg-[#E29A5B] text-[#1A1816] text-2xl hover:bg-[#c47e45] transition-all shadow-lg hover:shadow-[#E29A5B]/40 transform hover:scale-110" 
+           aria-label="Telegram">
+          <i class="fab fa-telegram-plane"></i>
+        </a>
+      </div>
+      
+      <div class="border-t border-white/10 pt-8 text-sm text-white/40">
+        <p>© 2026 ClockKava. Усі права захищено. <span class="text-[#E29A5B]/80">Кременчук</span></p>
+        <p class="mt-1">Смакуй момент — час для кави завжди.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JavaScript для табов ===== -->
+  <script>
+    (function() {
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const contents = {
+        classic: document.getElementById('tab-classic'),
+        author: document.getElementById('tab-author'),
+        desserts: document.getElementById('tab-desserts'),
+      };
+
+      function switchTab(tabId) {
+        Object.values(contents).forEach(el => el.classList.add('hidden'));
+        if (contents[tabId]) {
+          contents[tabId].classList.remove('hidden');
+        }
+        tabButtons.forEach(btn => {
+          const btnTab = btn.getAttribute('data-tab');
+          if (btnTab === tabId) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          const tabId = this.getAttribute('data-tab');
+          if (tabId) {
+            switchTab(tabId);
+          }
+        });
+      });
+
+      const activeTab = document.querySelector('.tab-btn.active');
+      if (activeTab) {
+        const activeTabId = activeTab.getAttribute('data-tab');
+        if (activeTabId && contents[activeTabId] && contents[activeTabId].classList.contains('hidden')) {
+          switchTab(activeTabId);
+        }
+      } else {
+        switchTab('classic');
+      }
+    })();
+  </script>
+</body>
+</html>
